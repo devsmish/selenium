@@ -8,4 +8,3 @@ class SimpleMath:
     def cube(self, x):
         """Возвращает куб числа."""
         return x * x * x
-    
