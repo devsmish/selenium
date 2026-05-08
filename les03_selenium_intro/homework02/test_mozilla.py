@@ -14,7 +14,7 @@ def driver():
 
 
 def test_payment_section_screenshot(driver):
-    save_dir = os.path.join(os.getcwd(), "E:\REPO\qa\selenium\les02_selenium_intro\homework02")
+    save_dir = os.path.join(os.getcwd(), "/les03_selenium_intro\homework02")
     os.makedirs(save_dir, exist_ok=True)
     file_path = os.path.join(save_dir, "payment_section.png")
 
