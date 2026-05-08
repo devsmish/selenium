@@ -19,7 +19,7 @@ class Calculator:
         return self.last_result
 
     def pow(self, a, b=2):
-        return a ** b
+        return a**b
 
     def avg(self, nums):
         if len(nums) == 0:

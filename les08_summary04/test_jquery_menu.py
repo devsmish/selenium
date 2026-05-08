@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 @pytest.fixture()
 def driver():
     driver = webdriver.Chrome()
-    driver.get('https://the-internet.herokuapp.com/jqueryui/menu#')
+    driver.get("https://the-internet.herokuapp.com/jqueryui/menu#")
     yield driver
     driver.quit()
 

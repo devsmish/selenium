@@ -14,7 +14,7 @@ class Calculator:
         return a / b
 
     def pow(self, a, b=2):
-        return a ** b
+        return a**b
 
     def avg(self, nums):
         if len(nums) == 0:

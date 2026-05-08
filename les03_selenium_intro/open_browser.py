@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from time import sleep
 import pytest
+
 # import os
 
 
@@ -20,12 +21,14 @@ def driver():
     yield driver
     driver.quit()
 
+
 def test_about_page(driver):
     driver.get("https://itcareerhub.de/ru")
     sleep(3)
     about_link = driver.find_element(By.LINK_TEXT, "О нас")
     about_link.click()
     sleep(3)
+
 
 def test_berlin(driver):
     driver.get("https://itcareerhub.de/ru")

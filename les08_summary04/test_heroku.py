@@ -8,14 +8,16 @@ from selenium.webdriver.support import expected_conditions as EC
 @pytest.fixture()
 def driver():
     driver = webdriver.Chrome()
-    driver.get('https://the-internet.herokuapp.com/entry_ad')
+    driver.get("https://the-internet.herokuapp.com/entry_ad")
     yield driver
     driver.quit()
 
 
 def test_close_modal(driver):
     wait = WebDriverWait(driver, 5)
-    btn_close = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.modal-footer > p")))
+    btn_close = wait.until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "div.modal-footer > p"))
+    )
     btn_close.click()
     time.sleep(5)
 

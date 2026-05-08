@@ -4,4 +4,3 @@ class EvenOddChecker:
 
     def is_odd(self, n):
         return n % 2 != 0
-

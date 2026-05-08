@@ -26,6 +26,6 @@ def test_payment_section_screenshot(driver):
 
     payment_section = driver.find_element(
         By.CSS_SELECTOR,
-        "#rec1921734713 > div:nth-child(2) > div:nth-child(1) > div:nth-child(2)"
+        "#rec1921734713 > div:nth-child(2) > div:nth-child(1) > div:nth-child(2)",
     )
     payment_section.screenshot(file_path)
