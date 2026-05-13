@@ -75,4 +75,3 @@ def test_form_validation(driver):
     for field_id in green_fields_ids:
         element = driver.find_element(By.ID, field_id)
         assert "alert-success" in element.get_attribute("class"), f"Поле {field_id} должно быть зеленым"
-        
