@@ -43,4 +43,3 @@ class TestITCareerHub:
         expected_text = "Если вы не дозвонились, заполните форму на сайте.Мы свяжемся с вами"
 
         assert wait.until(EC.text_to_be_present_in_element((By.TAG_NAME, "body"), expected_text))
-        
