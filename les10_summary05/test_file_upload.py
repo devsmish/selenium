@@ -42,4 +42,3 @@ def test_upload_file(driver):
     submit_button = driver.find_element(By.CSS_SELECTOR, 'button')
     submit_button.click()
     sleep(5)
-    
