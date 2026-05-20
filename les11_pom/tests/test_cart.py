@@ -1,8 +1,8 @@
 import pytest
 from selenium import webdriver
-from les11_api_tests_with_postman.pages.inventory_page import InventoryPage
-from les11_api_tests_with_postman.pages.login_page import LoginPage
-from les11_api_tests_with_postman.pages.cart_page import CartPage
+from les11_pom.pages.inventory_page import InventoryPage
+from les11_pom.pages.login_page import LoginPage
+from les11_pom.pages.cart_page import CartPage
 
 
 class TestInventory:

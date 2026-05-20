@@ -1,7 +1,7 @@
 from time import sleep
 import pytest
 from selenium import webdriver
-from les11_api_tests_with_postman.pages.login_page import LoginPage
+from les11_pom.pages.login_page import LoginPage
 
 # @pytest.mark.usefixtures("driver") ## ссылка на применение фикстуры драйвер
 class TestLogin: ## произвольное название
