@@ -77,4 +77,3 @@ def test_empty_password(driver):
    error_message = driver.find_element(By.CLASS_NAME, "error-message-container")
    assert error_message, "Сообщение об ошибке не отображается."
    assert "Password is required" in error_message.text, "Неверное сообщение об ошибке."
-
