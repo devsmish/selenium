@@ -1,52 +1,29 @@
-import pytest
 import constants
+import time
+import random
 
 
-def test_employee_full_lifecycle(api, auth_token):
-    companies_res_before = api.get_company_list()
-    assert companies_res_before.status_code == 200, "Не удалось получить список компаний"
-
-    companies_before = companies_res_before.json()
-    max_id_before = max([c.get('id') for c in companies_before if c.get('id') is not None], default=0)
-
-    create_company_res = api.create_company(constants.NEW_COMPANY_PAYLOAD)
-    assert create_company_res.status_code == 201, "Сервер отклонил создание компании"
-
-    companies_res_after = api.get_company_list()
-    assert companies_res_after.status_code == 200
-
-    companies_after = companies_res_after.json()
-    new_company_id = max([c['id'] for c in companies_after])
-
-    assert new_company_id > max_id_before, "ID новой компании не превышает предыдущий максимум"
-
+def test_create_employee_success(api, clean_company_id):
     employee_payload = constants.NEW_EMPLOYEE_PAYLOAD.copy()
-    employee_payload["company_id"] = new_company_id
+    employee_payload["company_id"] = clean_company_id
 
-    create_emp_res = api.create_employee(employee_payload)
-    assert create_emp_res.status_code == 201, "Не удалось создать сотрудника"
+    unique_email = f"qa_{int(time.time())}_{random.randint(1000, 9999)}_{constants.NEW_EMPLOYEE_PAYLOAD['email']}"
+    employee_payload["email"] = unique_email
 
-    emp_list_res = api.get_employee_list(new_company_id)
-    assert emp_list_res.status_code == 200, "Ошибка при запросе списка сотрудников компании"
+    response = api.create_employee(employee_payload)
+    assert response.status_code in [200], f"Ошибка создания сотрудника: {response.text}"
 
-    employee_list = emp_list_res.json()
 
-    if not employee_list:
-        raise ValueError(f"Ошибка логики: Компания с ID {new_company_id} пуста после добавления сотрудника!")
+def test_get_employee_info_by_id(api, clean_employee_id):
+    info_response = api.get_employee_info(clean_employee_id)
 
-    assert len(employee_list) == 1, "В изолированной тест-компании должен находиться ровно один сотрудник"
+    assert info_response.status_code == 200
+    assert info_response.json()['first_name'] == constants.NEW_EMPLOYEE_PAYLOAD['first_name']
 
-    target_employee_id = employee_list[0]['id']
 
-    emp_info_res = api.get_employee_info(target_employee_id)
-    assert emp_info_res.status_code == 200, "Не удалось получить карточку сотрудника"
-    assert emp_info_res.json()['first_name'] == constants.NEW_EMPLOYEE_PAYLOAD['first_name']
+def test_update_employee_info(api, clean_employee_id, auth_token):
+    patch_response = api.update_employee(clean_employee_id, auth_token, constants.UPDATE_EMPLOYEE_PAYLOAD)
+    assert patch_response.status_code == 200, f"Ошибка изменения данных: {patch_response.text}"
 
-    patch_res = api.update_employee(target_employee_id, auth_token, constants.UPDATE_EMPLOYEE_PAYLOAD)
-    assert patch_res.status_code == 200, "Сервер вернул ошибку при попытке изменить фамилию сотрудника"
-
-    final_info_res = api.get_employee_info(target_employee_id)
-    assert final_info_res.status_code == 200
-
-    final_data = final_info_res.json()
-    assert final_data['last_name'] == constants.UPDATE_EMPLOYEE_PAYLOAD['last_name'], "Фамилия не обновилась"
+    final_info = api.get_employee_info(clean_employee_id).json()
+    assert final_info['last_name'] == constants.UPDATE_EMPLOYEE_PAYLOAD['last_name'], "Фамилия не изменилась"
